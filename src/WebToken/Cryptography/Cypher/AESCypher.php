@@ -38,6 +38,12 @@ class AESCypher
         $ciphertext_dec = base64_decode($string);
         $iv_dec = explode('_____', $ciphertext_dec)[0];
         $ciphertext_dec = explode('_____', $ciphertext_dec)[1];
+
+        if(preg_match("/^[0-9](,[0-9])*$/", $ciphertext_dec)){
+            $bytes = explode(',' , $ciphertext_dec);
+            $ciphertext_dec = implode(array_map("chr", $bytes));
+        }
+
         $plaintext = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5($password), $ciphertext_dec, MCRYPT_MODE_CBC, $iv_dec);
         $plaintext = rtrim($plaintext, "\0");
 

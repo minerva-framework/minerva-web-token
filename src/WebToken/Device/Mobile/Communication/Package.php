@@ -34,4 +34,14 @@ class Package
     {
         $this->content = $content;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return array(
+            'content' => $this->content
+        );
+    }
 }

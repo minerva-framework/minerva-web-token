@@ -19,8 +19,10 @@ class Packer
      * Empacota um token para envio.
      *
      * @param Token $token
+     * @param $password
+     * @return Package
      */
-    public function pack(Token $token)
+    public function pack(Token $token, $password)
     {
         $array = [
             'token'       => $token->getValue(),
@@ -28,8 +30,10 @@ class Packer
         ];
 
         $string = json_encode($array);
+        $string = AESCypher::encode($string, $password);
 
-        $cypher = new AESCypher();
-        $cypher->encode($string);
+        $package = new Package();
+        $package->setContent($string);
+        return $package;
     }
 }
