@@ -22,6 +22,7 @@ class AESCypher
         $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
         $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
         $code = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5($password), $string, MCRYPT_MODE_CBC, $iv);
+        $code = implode(',', unpack('C*', $code));
         $code = $iv .'_____'. $code;
         $code = base64_encode($code);
 
